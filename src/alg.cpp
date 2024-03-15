@@ -47,7 +47,7 @@ int countPairs3(int* arr, int len, int value) {
         int index = binarySearch(arr, i + 1, len - 1, value - arr[i]);
         if (index != -1 && arr[index] != arr[i]) {
             c++;
-            while (i < len – 1 && arr[i] == arr[i + 1]) {
+            while (i < len - 1 && arr[i] == arr[i + 1]) {
                 i++;
             }
         }
