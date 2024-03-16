@@ -1,46 +1,64 @@
 // Copyright 2021 NNTU-CS
 int countPairs1(int* arr, int len, int value) {
     int c = 0;
-    for (int i = 0; i < len - 1; i++) {
+    for (int i = 0; i < len; i++) {
         for (int j = i + 1; j < len; j++) {
             if (arr[i] + arr[j] == value) {
                 c++;
             }
         }
     }
+    if (c == 0) {
+        return 0;
+    }
     return c;
 }
 int countPairs2(int* arr, int len, int value) {
     int c = 0;
+    for (int mlen = len - 1; arr[mlen] > value; mlen--);
     for (int left = 0; left < len - 1; left++) {
-        for (int right = left + 1; right < len; right++) {
+        for (int right = len - 1; left < right; right--) {
             if (arr[left] + arr[right] == value) {
                 c++;
             }
         }
     }
+    if (c == 0) {
+        return 0;
+    }
     return c;
 }
-int binarySearch(int* arr, int l, int r, int x) {
-    while (l <= r) {
-        int middle = l + (r - l) / 2;
-        if (arr[middle] == x) {
-            return middle;
-        } else if (arr[middle] < x) {
-            l = middle + 1;
-        } else {
-            r = middle - 1;
-        }
-    }
-    return -1;
-}
-int countPairs3(int* arr, int len, int value) {
+
+int countPairs3(int *arr, int len, int value) {
     int c = 0;
-    for (int i = 0; i < len - 1; i++) {
-        int index = binarySearch(arr, i + 1, len - 1, value - arr[i]);
-        if (index != -1) {
-            c++;
+    for (int i = 0; i < len; i++) {
+        int secEl = value - arr[i];
+        int l = i + 1;
+        int h = len - 1;
+        while (l <= h) {
+            int middle = (l + h) / 2;
+            if (arr[middle] == secEl) {
+                c++;
+                int mmid = middle - 1;
+                while ((mmid > i) && (arr[mmid] == arr[middle])) {
+                    c++;
+                    mmid--;
+                }
+                int bmid = middle + 1;
+                while ((i < bmid) && (arr[bmid] == arr[middle])) {
+                    c++;
+                    bmid++;
+                }
+                break;
+            } else if (arr[middle] > secEl) {
+                h = middle - 1;
+            } else {
+                l = middle + 1;
+            }
         }
     }
-    return c;
+    if (c) {
+        return c;
+    }
+    return 0;
 }
