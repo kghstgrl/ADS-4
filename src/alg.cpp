@@ -25,11 +25,10 @@ int countPairs2(int* arr, int len, int value) {
             }
         }
     }
-    if (c == 0) 
+    if (c == 0)
         return 0;
     return c;
 }
-
 int countPairs3(int* arr, int len, int value) {
     int c = 0;
     for (int i = 0; i < len; ++i) {
